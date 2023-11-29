@@ -20,7 +20,7 @@ fetch('/fetchPokemon', {
 });
 
 // Démarrer le serveur
-const port = 3001;
+const port = 3000;
 app.listen(port, () => {
     console.log(`Serveur lancé sur le port ${port} http://localhost:${port}`);
 });
