@@ -9,5 +9,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.3.0",
+    "axios": "^1.4.0",
+    "jsdom": "^23.0.0"
+  }
 }
