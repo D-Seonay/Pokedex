@@ -1,4 +1,4 @@
-var isShiny = false; // Variable pour suivre l'état de l'image (normal ou chromatique)
+var isShiny = false; 
 
 function displayPokemon(pokemonData) {
 	// Obtenir l'URL de la ressource "pokemon-form" à partir des données du Pokémon
