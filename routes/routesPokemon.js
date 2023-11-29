@@ -5,6 +5,8 @@ const router = express.Router();
 const { readFileSync } = require('fs');
 const axios = require('axios');
 
+const { fetchPokemon } = require('../functions/fetchPokemon');
+
 // Fonction pour renvoyer un fichier statique
 function serveStaticFile(path, contentType, res) {
     const data = readFileSync(path, 'utf-8');
@@ -24,7 +26,6 @@ router.get('/css/styles.css', (req, res) => {
 router.get('/js/app.js', (req, res) => {
     serveStaticFile('./src/js/app.js', 'text/javascript', res);
 });
-
 // Si aucune route correspond, retourne une erreur 404
 router.use((req, res) => {
     res.status(404).send('Page not found!');
