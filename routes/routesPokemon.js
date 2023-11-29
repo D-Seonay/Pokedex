@@ -5,7 +5,6 @@ const router = express.Router();
 const { readFileSync } = require('fs');
 const axios = require('axios');
 
-const { fetchPokemon } = require('../functions/fetchPokemon');
 
 // Fonction pour renvoyer un fichier statique
 function serveStaticFile(path, contentType, res) {
