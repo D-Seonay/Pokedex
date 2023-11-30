@@ -1,41 +1,60 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokédex</title>
     <link rel="stylesheet" type="text/css" href="./css/styles.css">
+    <!-- ajout de bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
 <script type="module" src="https://unpkg.com/@splinetool/viewer@0.9.369/build/spline-viewer.js"></script>
-<input type="text" id="pokemonInput" placeholder="Entrez un numéro ou un nom">
-<div class="button">
-    <button type="button" onclick="getPokemon()">Rechercher</button>    
-    <button type="button" onclick="fetchRandomPokemon()">Aléatoire</button>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <input type="text" id="pokemonInput" placeholder="Entrez un numéro ou un nom">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button type="button" onclick="getPokemon()" class="btn btn-primary btn-block">Rechercher</button>
+        </div>
+        <div class="col-6">
+            <button type="button" onclick="fetchRandomPokemon()" class="btn btn-secondary btn-block">Aléatoire</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div id="generation-buttons">
+                <button type="button" class="generation-button btn btn-primary" data-generation="1">Génération 1</button>
+                <button type="button" class="generation-button btn btn-primary" data-generation="2">Génération 2</button>
+                <!-- Ajoutez d'autres boutons pour d'autres générations si nécessaire -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Détails du Pokémon</h2>
+            <div id="pokemonContainer">
+                <img id="pokemonImage" src="../public/img/pokeball.png" alt="Pokeball">
+                <h2 id="pokemonName"></h2>
+                <h2 id="pokemonNumber"></h2>
+                <p id="pokemonType"></p>
+                <p id="pokemonVersions"></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Liste</h2>
+            <ul class="">
+                <li id="pokemonList"></li>
+            </ul>
+        </div>
+    </div>
 </div>
-<div id="generation-buttons">
-    <button type="button" class="generation-button" data-generation="1">Génération 1</button>
-    <button type="button" class="generation-button" data-generation="2">Génération 2</button>
-    <!-- Ajoutez d'autres boutons pour d'autres générations si nécessaire -->
-</div>
-
-
-<h2>Détails du Pokémon</h2>
-<div id="pokemonContainer">
-    <img id="pokemonImage" src="../public/img/pokeball.png" alt="Pokeball">
-    <h2 id="pokemonName"></h2>
-    <h2 id="pokemonNumber"></h2>
-    <p id="pokemonType"></p>
-    <p id="pokemonVersions"></p>
-</div>
-
-<h2>Liste</h2>
-<ul id="pokemonList"></ul>
 
 
 <script src="/js/app.js"></script>
