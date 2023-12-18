@@ -4,6 +4,39 @@ var isShiny = false; // Variable pour suivre l'état de l'image (normal ou chrom
 var currentPage = 1; // Page actuelle
 const pageSize = 50; // Nombre maximum d'éléments par page
 
+function getPokemon() {
+    var pokemonInput = document.getElementById("pokemonInput").value;
+
+    // Vérifier si l'entrée est un numéro ou un nom de Pokémon
+    if (pokemonInput) {
+        fetchPokemon(pokemonInput);
+    } else {
+        console.log("Veuillez entrer un numéro ou nom de Pokémon valide !");
+    }
+}
+function fetchPokemon(identifier) {
+    var apiUrlPokemon = "https://pokeapi.co/api/v2/pokemon/" + identifier;
+
+    fetch(apiUrlPokemon)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Pokémon non trouvé !");
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayPokemon(data);
+        })
+        .catch(error => {
+            console.log("Erreur : " + error);
+        });
+}
+
+function fetchRandomPokemon() {
+    var randomId = Math.floor(Math.random() * totalPokemon) + 1; // Génère un ID aléatoire entre 1 et 1010
+    fetchPokemon(randomId);
+}
+
 function fetchPokemonById(id) {
     const apiUrl = "https://pokeapi.co/api/v2/pokemon/" + id;
 
