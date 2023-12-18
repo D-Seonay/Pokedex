@@ -25,6 +25,12 @@ router.get('/css/styles.css', (req, res) => {
 router.get('/js/app.js', (req, res) => {
     serveStaticFile('./src/js/app.js', 'text/javascript', res);
 });
+
+router.get('/img/pokeball.png', (req, res) => {
+    serveStaticFile('./public/img/pokeball.png', 'image/png', res);
+});
+
+
 // Si aucune route correspond, retourne une erreur 404
 router.use((req, res) => {
     res.status(404).send('Page not found!');

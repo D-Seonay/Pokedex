@@ -32,7 +32,7 @@ function fetchPokemon(identifier) {
 }
 
 function fetchRandomPokemon() {
-    var randomId = Math.floor(Math.random() * totalPokemon) + 1; // Génère un ID aléatoire entre 1 et 898
+    var randomId = Math.floor(Math.random() * totalPokemon) + 1; // Génère un ID aléatoire entre 1 et 1010
     fetchPokemon(randomId);
 }
 
@@ -56,31 +56,31 @@ function displayPokemon(pokemonData) {
         .catch(error => {
             console.log("Erreur lors de la récupération des détails de la forme du Pokémon : " + error);
         });
+    
+    // Récupération des données du Pokémon pour affichage
     var pokemonName = pokemonData.name;
     var pokemonNumber = pokemonData.id;
     var pokemonTypes = pokemonData.types.map(type => type.type.name).join(", ");
     var pokemonImage = pokemonData.sprites.front_default;
     var pokemonShinyImage = pokemonData.sprites.front_shiny;
-    console.log(pokemonData)
-
 
     var imageElement = document.getElementById("pokemonImage");
     imageElement.src = pokemonImage;
 
+    // Gestion du clic pour changer entre l'image normale et chromatique (shiny)
     imageElement.addEventListener("click", function() {
         isShiny = !isShiny; // Inverser l'état de l'image (normal ou chromatique)
         imageElement.src = isShiny ? pokemonShinyImage : pokemonImage;
     });
 
+    // Affichage des informations du Pokémon
     document.getElementById("pokemonName").textContent = pokemonName;
     document.getElementById("pokemonType").textContent = "Type(s) : " + pokemonTypes;
     document.getElementById("pokemonNumber").textContent = "Numéro : " + pokemonNumber;
 
     var pokemonContainer = document.getElementById("pokemonContainer");
     pokemonContainer.style.display = "flex";
-
 }
-
 
 function fetchPokemonById(id) {
     const apiUrl = "https://pokeapi.co/api/v2/pokemon/" + id;
@@ -91,14 +91,28 @@ function fetchPokemonById(id) {
                 throw new Error("Erreur lors de la récupération des données du Pokémon !");
             }
             return response.json();
+        })
+        .then(data => {
+            // Limiter l'affichage aux 50 premiers Pokémon
+            const pokemonId = data.id;
+            if (pokemonId <= 50) {
+                return data; // Retourne les données si l'ID est inférieur ou égal à 50
+            } else {
+                throw new Error("Limité aux 50 premiers Pokémon");
+            }
         });
 }
 
-function createPokemonListSequentially(totalPokemon, currentId = 1) {
-    if (currentId <= totalPokemon) {
-        fetchPokemonById(currentId)
-            .then(data => {
+function displayCurrentPage() {
+    const pageSize = 50; // Nombre maximum d'éléments par page
+    const startIndex = (currentPage - 1) * pageSize + 1;
+    const endIndex = currentPage * pageSize;
 
+    // Limite au 50 premiers Pokémon
+    for (let i = startIndex; i <= endIndex && i <= totalPokemon; i++) {
+        fetchPokemonById(i)
+            .then(data => {
+                // Créer un élément de liste pour chaque Pokémon avec son image et son nom
                 const liElement = document.createElement("li");
                 const linkElement = document.createElement("a");
                 const imgElement = document.createElement("img");
@@ -112,11 +126,9 @@ function createPokemonListSequentially(totalPokemon, currentId = 1) {
                 liElement.appendChild(linkElement);
                 pokemonListElement.appendChild(liElement);
 
-                setTimeout(() => {
-                    createPokemonListSequentially(totalPokemon, currentId + 1);
-                }, 50);
+                // Ajouter un événement de clic pour afficher les détails du Pokémon
                 liElement.addEventListener("click", function() {
-                    fetchPokemon(data.name);
+                    displayPokemon(data);
                 });
             })
             .catch(error => {
@@ -124,72 +136,7 @@ function createPokemonListSequentially(totalPokemon, currentId = 1) {
             });
     }
 }
-createPokemonListSequentially(1011);
 
+// Appel à la fonction pour afficher les 50 premiers Pokémon
+displayCurrentPage();
 
-
-// Sélectionnez les boutons de génération par leur classe ou leur ID
-const generationButtons = document.querySelectorAll('.generation-button');
-
-// Ajoutez un gestionnaire d'événements à chaque bouton de génération
-generationButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const generation = this.getAttribute('data-generation');
-        filterPokemonByGeneration(generation);
-    });
-});
-const generations = [
-    { name: "red-blue", id: 1 },
-    { name: "gold-silver", id: 2 },
-    { name: "ruby-sapphire", id: 3 },
-    { name: "diamond-pearl", id: 4 },
-    { name: "black-white", id: 5 },
-    { name: "sun-moon", id: 6 },
-];
-
-
-// Fonction pour filtrer les Pokémon par génération
-function filterPokemonByGeneration(generation) {
-    // Effacez la liste actuelle des Pokémon
-    pokemonListElement.innerHTML = '';
-
-    // Réinitialisez la liste de Pokémon de manière séquentielle pour la génération sélectionnée
-    createPokemonListSequentially(totalPokemon, 1, generation);
-}
-
-// Fonction récursive pour créer la liste de Pokémon de manière séquentielle pour une génération spécifique
-/*function createPokemonListSequentiallyGenaration(totalPokemon, currentId = 1, generation = 0) {
-    if (currentId <= totalPokemon) {
-        fetchPokemonById(currentId)
-            .then(data => {
-                if (generation === 0 || data.generation.name === `generation-${generation}`) {
-                    
-                    const liElement = document.createElement("li");
-                    const linkElement = document.createElement("a");
-                    const imgElement = document.createElement("img");
-
-                    imgElement.src = data.sprites.front_default;
-                    imgElement.alt = data.name;
-
-                    liElement.textContent = data.id + " " + data.name;
-
-                    linkElement.href = "#";
-                    linkElement.appendChild(imgElement);
-                    linkElement.appendChild(liElement);
-
-                    pokemonListElement.appendChild(linkElement);
-                }
-
-                // Attendez un peu avant d'appeler la fonction pour le Pokémon suivant
-                setTimeout(() => {
-                    createPokemonListSequentially(totalPokemon, currentId + 1, generation);
-                }, 100); // Délai de 100 millisecondes (ajustez selon vos besoins)
-            })
-            .catch(error => {
-                console.log("Erreur : " + error);
-            });
-    }
-}
-
-// Appelez la fonction pour créer la liste de tous les Pokémon au chargement de la page
-createPokemonListSequentially(1010); // Par exemple, créez une liste pour les 10 premiers Pokémon*/

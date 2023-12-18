@@ -8,42 +8,38 @@
     <!-- ajout de bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
 <body>
-<script type="module" src="https://unpkg.com/@splinetool/viewer@0.9.369/build/spline-viewer.js"></script>
-<div class="container center">
-    <div class="row">
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <button type="button" onclick="getPokemon()" class="btn btn-primary btn-block">Rechercher</button>
+    <div class="container">
+        <div class="row">
+            <input type="text" id="pokemonInput" placeholder="Entrez un numéro ou un nom" class="form-control col-md-4">
+            <button type="button" onclick="getPokemon()" class="btn btn-primary">Rechercher</button>
+            <button type="button" onclick="fetchRandomPokemon()" class="btn btn-secondary">Aléatoire</button>
         </div>
-        <div class="col-6">
-            <button type="button" onclick="fetchRandomPokemon()" class="btn btn-secondary btn-block">Aléatoire</button>
+        <div class="pokemon">
+            <h2 class="pokemon-details__title">Détails du Pokémon</h2>
+            <div id="pokemonContainer" class="pokemon-details__container">
+                <img id="pokemonImage" src="#" alt="Pokeball" class="pokemon-details__image">
+                <h2 id="pokemonName" class="pokemon-details__name"></h2>
+                <h2 id="pokemonNumber" class="pokemon-details__number"></h2>
+                <p id="pokemonType" class="pokemon-details__type"></p>
+                <p id="pokemonVersions" class="pokemon-details__versions"></p>
+            </div>
         </div>
-        <div class="col-6">
-            <input type="text" id="pokemonInput" placeholder="Entrez un numéro ou un nom" class="pokemon-search__input">
-        </div>
-    </div>
-    <div class="pokemon">
-                <h2 class="pokemon-details__title">Détails du Pokémon</h2>
-                <div id="pokemonContainer" class="pokemon-details__container">
-                    <img id="pokemonImage" src="../public/img/pokeball.png" alt="Pokeball" class="pokemon-details__image">
-                    <h2 id="pokemonName" class="pokemon-details__name"></h2>
-                    <h2 id="pokemonNumber" class="pokemon-details__number"></h2>
-                    <p id="pokemonType" class="pokemon-details__type"></p>
-                    <p id="pokemonVersions" class="pokemon-details__versions"></p>
-                </div>
-        </div>
+
             <div class="pokemon-list">
-                <h2 class="pokemon-list__title">Liste :</h2>
+                <h2 class="pokemon-list__title">Liste de Pokémon :</h2>
                 <div class="listes" id="pokemonList"></div>
-        </div>
-</div>
+            </div>
+        <button id="firstButton" class="btn btn-secondary">1er Page </button>
+        <button id="prevButton" class="btn btn-secondary">Page précédente</button>
+        <button id="nextButton" class="btn btn-secondary">Page suivante</button>
+        <button id="lastButton" class="btn btn-secondary">Dernière page</button>
 
+        <div id="showPokemonButton"></div>
+        
+        
+    </div>
 
-
-
-<script src="/js/app.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html>
