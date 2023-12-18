@@ -108,6 +108,7 @@ const prevButton = document.getElementById("prevButton");
 const nextButton = document.getElementById("nextButton");
 const lastButton = document.getElementById("lastButton");
 
+
 firstButton.addEventListener("click", function() {
     currentPage = 1;
     displayCurrentPage(currentPage);
@@ -133,3 +134,67 @@ lastButton.addEventListener("click", function() {
     currentPage = Math.ceil(totalPokemon / pageSize);
     displayCurrentPage(currentPage);
 });
+
+const totalPages = Math.ceil(totalPokemon / pageSize); // Calcul du nombre total de pages
+
+function displayPaginationButtons(currentPage) {
+    const paginationElement = document.getElementById("pagination");
+    paginationElement.innerHTML = ''; // Efface le contenu actuel des boutons de pagination
+
+    const maxPageButtons = 8; // Nombre maximal de boutons de page à afficher
+
+    let startPage = currentPage - Math.floor(maxPageButtons / 2);
+    startPage = Math.max(startPage, 1); // Empêche d'avoir des numéros de page inférieurs à 1
+
+    let endPage = startPage + maxPageButtons - 1;
+    if (endPage > totalPages) {
+        endPage = totalPages;
+        startPage = Math.max(endPage - maxPageButtons + 1, 1); // Ajuste le début pour conserver 5 boutons si totalPages < maxPageButtons
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+        const pageButton = document.createElement("button");
+        pageButton.textContent = i;
+        pageButton.addEventListener("click", function() {
+            currentPage = i;
+            displayCurrentPage(currentPage);
+            displayPaginationButtons(currentPage);
+        });
+        if (i === currentPage) {
+            pageButton.classList.add("active"); // Ajoute une classe pour indiquer la page actuelle
+        }
+        paginationElement.appendChild(pageButton);
+    }
+
+    // Gestion des clics sur les boutons de navigation
+    firstButton.addEventListener("click", function() {
+        if (currentPage !== 1) {
+            currentPage = 1;
+            displayPaginationButtons(currentPage);
+        }
+    });
+
+    prevButton.addEventListener("click", function() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayPaginationButtons(currentPage);
+        }
+    });
+
+    nextButton.addEventListener("click", function() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayPaginationButtons(currentPage);
+        }
+    });
+
+    lastButton.addEventListener("click", function() {
+        if (currentPage !== totalPages) {
+            currentPage = totalPages;
+            displayPaginationButtons(currentPage);
+        }
+    });
+}
+
+// Au chargement initial, affiche les boutons de pagination pour la première page
+displayPaginationButtons(currentPage);

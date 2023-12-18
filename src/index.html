@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
+    <div class="">
         <div class="row">
             <input type="text" id="pokemonInput" placeholder="Entrez un numéro ou un nom" class="form-control col-md-4">
             <button type="button" onclick="getPokemon()" class="btn btn-primary">Rechercher</button>
@@ -30,10 +30,15 @@
                 <h2 class="pokemon-list__title">Liste de Pokémon :</h2>
                 <div class="listes" id="pokemonList"></div>
             </div>
-        <button id="firstButton" class="btn btn-secondary">1er Page </button>
-        <button id="prevButton" class="btn btn-secondary">Page précédente</button>
-        <button id="nextButton" class="btn btn-secondary">Page suivante</button>
-        <button id="lastButton" class="btn btn-secondary">Dernière page</button>
+
+
+            <div class="button-container">
+                <button id="firstButton"><<</button>
+                <button id="prevButton"><</button>
+                <div id="pagination"></div>
+                <button id="nextButton">></button>
+                <button id="lastButton">>></button>
+            </div>
 
         <div id="showPokemonButton"></div>
         

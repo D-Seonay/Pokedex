@@ -7,9 +7,12 @@
 :root{
     --color-primary: #F8F9FC;
     --color-secondary: #E1E6FE;
-    --color-action: #8767F3;
+    --color-action: #426fd6;
     --color-white: #ffffff;
     --color-black: #000000;
+    --transparent-primary-color: rgba(47, 48, 97, 0.8);
+    --transparent-secondary-color: rgba(255, 255, 255, 0.4);
+    --transparent-tertiary-color: rgba(247, 255, 247, 0.8);
 
     --box-shadow: 0 3px 15px rgba(0, 0, 0, .3);
 }
@@ -83,7 +86,7 @@ li {
     justify-content: center;
     justify-items: center;
     border-radius: 25px;
-}
+}   
 
 
 
@@ -140,4 +143,42 @@ li {
 
 .pokemon-details__list li:hover {
     background-color: var(--color-secondary);
+}
+
+
+.button-container {
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 60px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    background-color: var(--transparent-secondary-color);
+    box-shadow: var(--secondary-color) 0px 0px 20px 0px;
+}
+
+.button-container button {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: #F1EFF2;
+    color: #000000;
+    font-size: 20px;
+    width: 45px;
+    transition: all 0.7s;
+}
+
+.button-container button:hover:not(:disabled),
+.button-container button.active {
+    background-color: var(--color-action);
+    color: #000;
+}
+
+.button-container button:hover:not(:disabled) {
+    cursor: pointer;
+}
+
+.button-container button:disabled {
+    opacity: 0.5;
 }
