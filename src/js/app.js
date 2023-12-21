@@ -1,4 +1,4 @@
-const totalPokemon = 1010; // Nombre total de Pokémon dans la base de données
+const totalPokemon = 101; // Nombre total de Pokémon dans la base de données
 const pokemonListElement = document.getElementById("pokemonList");
 var isShiny = false; // Variable pour suivre l'état de l'image (normal ou chromatique)
 var currentPage = 1; // Page actuelle
@@ -25,7 +25,7 @@ function fetchPokemon(identifier) {
             return response.json();
         })
         .then(data => {
-            displayPokemon(data);
+                displayPokemon(data);
         })
         .catch(error => {
             console.log("Erreur : " + error);
@@ -103,10 +103,16 @@ function displayCurrentPage(pageNumber) {
     // Efface le contenu actuel de la liste de Pokémon
     pokemonListElement.innerHTML = '';
 
+    const promises = [];
+
     // Limite au maximum de 50 Pokémon par page
     for (let i = startIndex; i <= endIndex && i <= totalPokemon; i++) {
-        fetchPokemonById(i)
-            .then(data => {
+        promises.push(fetchPokemonById(i));
+    }
+
+    Promise.all(promises)
+        .then(pokemonDataArray => {
+            pokemonDataArray.forEach(data => {
                 // Crée un élément de liste pour chaque Pokémon avec son image et son nom
                 const liElement = document.createElement("li");
                 const linkElement = document.createElement("a");
@@ -125,15 +131,18 @@ function displayCurrentPage(pageNumber) {
                 liElement.addEventListener("click", function() {
                     displayPokemon(data);
                 });
-            })
-            .catch(error => {
-                console.log("Erreur : " + error);
             });
-    }
+        })
+        .catch(error => {
+            console.log("Erreur : " + error);
+        });
 }
 
+
 // Affiche la première page de Pokémon au chargement
-displayCurrentPage(currentPage);
+setTimeout(() => {
+    displayCurrentPage(currentPage);
+}, 1000);
 
 // Gestion des boutons de pagination
 const firstButton = document.getElementById("firstButton");
@@ -230,4 +239,6 @@ function displayPaginationButtons(currentPage) {
 }
 
 // Au chargement initial, affiche les boutons de pagination pour la première page
-displayPaginationButtons(currentPage);
+setTimeout(() => {
+    displayPaginationButtons(currentPage);
+}, 1000);
