@@ -183,7 +183,7 @@ function displayPaginationButtons(currentPage) {
     const paginationElement = document.getElementById("pagination");
     paginationElement.innerHTML = ''; // Efface le contenu actuel des boutons de pagination
 
-    const maxPageButtons = 8; // Nombre maximal de boutons de page à afficher
+    const maxPageButtons = 5; // Nombre maximal de boutons de page à afficher
 
     let startPage = currentPage - Math.floor(maxPageButtons / 2);
     startPage = Math.max(startPage, 1); // Empêche d'avoir des numéros de page inférieurs à 1
