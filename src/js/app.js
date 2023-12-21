@@ -2,7 +2,7 @@ const totalPokemon = 1017; // Nombre total de Pokémon dans la base de données
 const pokemonListElement = document.getElementById("pokemonList");
 var isShiny = false; // Variable pour suivre l'état de l'image (normal ou chromatique)
 var currentPage = 1; // Page actuelle
-const pageSize = 50; // Nombre maximum d'éléments par page
+const pageSize = 54; // Nombre maximum d'éléments par page
 
 function getPokemon() {
     var pokemonInput = document.getElementById("pokemonInput").value;
